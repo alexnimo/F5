@@ -1,0 +1,407 @@
+{
+	"info": {
+		"name": "Shaam ASM Policy Creation",
+		"_postman_id": "6e324f84-b53f-8964-5698-a1bf1cf2c821",
+		"description": "Creates ASM policies ( can create polices from csv file)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Step 1: Retrieve Authentication Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "88c4cef2-bd6d-421d-9ecd-b93b3c6f9a83",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"pm.test(\"Verify Token and set ENV\" , function() {",
+							"    ",
+							"    pm.response.to.have.status(200);",
+							"    var json_token = pm.response.json(pm.environment.get(\"token.token\"));",
+							"    pm.response.to.have.body(json_token);",
+							"    tests[ \"Token Value is: \" + json_token.token.token] = true;",
+							"",
+							"    if (json_token.token.token > \"1\") {",
+							"        ",
+							"        postman.setEnvironmentVariable(\"SH-WAF-01_token\" , json_token.token.token);",
+							"    }",
+							"",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"{{username}}\",\n    \"password\":\"{{password}}\",\n    \"loginProviderName\":\"tmos\"\n}"
+				},
+				"url": {
+					"raw": "https://{{bigip_ip}}/mgmt/shared/authn/login",
+					"protocol": "https",
+					"host": [
+						"{{bigip_ip}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"authn",
+						"login"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Step 2: Set Authentication Token Timeout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d46e91e8-22b5-40f0-a5d9-27a9eba5ab0f",
+						"type": "text/javascript",
+						"exec": [
+							"eval(postman.getGlobalVariable(\"_f5_workflow_functions\"));",
+							"",
+							"var check_vals = [",
+							"        { ",
+							"            \"path\":\"timeout\", ",
+							"            \"value\":\"36000\" ",
+							"        }",
+							"    ];",
+							"",
+							"pm.test(check_vals);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-F5-Auth-Token",
+						"value": "{{SH-WAF-01_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"timeout\":\"36000\"\n}"
+				},
+				"url": {
+					"raw": "https://{{bigip_ip}}/mgmt/shared/authz/tokens/{{SH-WAF-01_token}}",
+					"protocol": "https",
+					"host": [
+						"{{bigip_ip}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"authz",
+						"tokens",
+						"{{SH-WAF-01_token}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": " Step 3: Create ASM Policy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "eb437ad4-ec3f-40ca-9e1a-241794a953d1",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"pm.test(\"Set ASM policy ID\" , function() {",
+							"    ",
+							"    var asm_policy = pm.response.json(pm.environment.get(\"id\"));",
+							"    pm.response.to.have.body(asm_policy);",
+							"    postman.setEnvironmentVariable(\"asm_policy_id\" , asm_policy.id);",
+							"",
+							"});",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-F5-Auth-Token",
+						"value": "{{SH-WAF-01_token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"{{app_name}}\",\n    \"active\": \"false\",\n    \"applicationLanguage\": \"utf-8\",\n    \"description\": \"{{app_name}}\",\n    \"enforcementMode\": \"transparent\",\n    \"templateReference\": {\n    \t\"link\":\"{{asm_template}}\"\n    }\n    \n}"
+				},
+				"url": {
+					"raw": "https://{{bigip_ip}}/mgmt/tm/asm/policies/",
+					"protocol": "https",
+					"host": [
+						"{{bigip_ip}}"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"asm",
+						"policies",
+						""
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": " Step 4: Activate ASM Policy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "847f9799-7a0e-4a5d-bbc7-28ff0c8b8e02",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-F5-Auth-Token",
+						"value": "{{SH-WAF-01_token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n\t\"policyReference\": {\n\t\t\n\t\t\"link\": \"https://localhost/mgmt/tm/asm/policies/{{asm_policy_id}}\"\n\t}\n}\n"
+				},
+				"url": {
+					"raw": "https://{{bigip_ip}}/mgmt/tm/asm/tasks/apply-policy",
+					"protocol": "https",
+					"host": [
+						"{{bigip_ip}}"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"asm",
+						"tasks",
+						"apply-policy"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Step 5: Create Draft Rule",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "154e9766-d0bb-4c7d-8f65-8b62a8e3f800",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-F5-Auth-Token",
+						"value": "{{SH-WAF-01_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n\t\"kind\": \"tm:ltm:policy:policystate\",\n\n    \"partition\": \"Common\",\n    \"subPath\": \"Drafts\",\n    \"name\": \"{{traffic_policy}}\",\n\t\"createDraft\": true\n    }\n"
+				},
+				"url": {
+					"raw": "https://{{bigip_ip}}/mgmt/tm/ltm/policy/{{traffic_policy_pub}}/",
+					"protocol": "https",
+					"host": [
+						"{{bigip_ip}}"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"ltm",
+						"policy",
+						"{{traffic_policy_pub}}",
+						""
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Step 6: Set Rule - Path+ASM_Profile",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d4282e22-1915-4e31-a112-a7f6bb712210",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3dcc55bf-8a07-4622-b1cd-a881e5cd2201",
+						"type": "text/javascript",
+						"exec": [
+							"setTimeout(function (){}, 30000); //wait 30 seconds"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-F5-Auth-Token",
+						"value": "{{SH-WAF-01_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n    {\n    \t\t\n    \t\t\"kind\": \"tm:ltm:policy:rules:rulesstate\",\n    \t\t\"name\": \"{{app_name}}\",\n    \t\t\"generation\": 0,\n    \t\t\"selflink\": \"https://localhost/mgmt/tm/ltm/policy/{{traffic_policy_pub}}/rules\",\n    \t\t\"ordinal\": 1,\n    \t\t\"conditions\": [\n    \t\t\t{\n    \t\t\t\t\n    \t\t\t\t\"kind\": \"tm:ltm:policy:rules:condtions:condtionsstate\",\n    \t\t\t\t\"generation\": 0,\n    \t\t\t\t\"name\": \"0\",\n    \t\t\t\t\"caseInsensitive\":true,\n    \t\t\t\t\"httpUri\":true,\n    \t\t\t\t\"path\":true,\n    \t\t\t\t\"request\":true,\n    \t\t\t\t\"startsWith\": true,\n    \t\t\t\t\"values\":[\n    \t\t\t\t\t\"{{app_url}}\"\n    \t\t\t\t]\n    \t\t\t\t\n    \t\t\t}\n    \t\t\t\n    \t\t\t],\n    \t\t\t\n    \t\t\"actions\": [\n    \t\t\t{\n    \t\t\t\t\"kind\": \"tm:ltm:policy:rules:actions:actionsstate\",\n    \t\t\t\t\"generation\": 0,\n    \t\t\t\t\"name\": \"0\",\n    \t\t\t\t\"asm\": true,\n    \t\t\t\t\"enable\": true,\n    \t\t\t\t\"policy\": \"{{app_name}}\"\n    \t\t\t\t\n    \t\t\t\t\n    \t\t\t\t\n    \t\t\t}\n    \t\t\t\n    \t\t\t\n    \t\t\t]\n    \t\t\n}"
+				},
+				"url": {
+					"raw": "https://{{bigip_ip}}/mgmt/tm/ltm/policy/{{draft_policy}}/rules",
+					"protocol": "https",
+					"host": [
+						"{{bigip_ip}}"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"ltm",
+						"policy",
+						"{{draft_policy}}",
+						"rules"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Step 7: Publish Taffic Policy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d4282e22-1915-4e31-a112-a7f6bb712210",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-F5-Auth-Token",
+						"value": "{{SH-WAF-01_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n\t\"kind\": \"tm:ltm:policy:policystate\",\r\n\t\"command\": \"publish\",\r\n\t\"name\": \"/Common/Drafts/{{traffic_policy}}\"\r\n}"
+				},
+				"url": {
+					"raw": "https://{{bigip_ip}}/mgmt/tm/ltm/policy",
+					"protocol": "https",
+					"host": [
+						"{{bigip_ip}}"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"ltm",
+						"policy"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "8daebb1b-8777-44bb-8d06-83affd55120c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "38bfe5b0-9370-4c32-ba2b-22899c25cd14",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
