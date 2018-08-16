@@ -1,5 +1,5 @@
-<h3>F5 Certbot Automator
-<img src="https://certbot.eff.org/images/certbot-logo-1A.svg" alt="certbot bot" width="200px" height="200px" align="left">
+<h3><p>F5 Certbot Automator
+<img src="https://certbot.eff.org/images/certbot-logo-1A.svg" alt="certbot bot" width="200px" height="200px" align="left"></p>
 </h3>
 <h2> Abstract </h2>
 <p>
@@ -14,17 +14,17 @@ The challenge that is being implemented is http, to my opinion it's more generic
 
 <h2>Usage</h2>
 <h3>Configuration</h3>
-<p> dehydrated configuration can be changed by editing the config file( you can also run the script with the default config file). <br>
+<p> dehydrated configuration can be changed by editing the config file( you can also run the script with the default config file). &nbsp;
 Some basic configuration must be made in the certbot_hook.py:
 </p>
 <code>
-BIGIP_MNG_IP = "" - The management IP address of the Big-IP </br>
-BIGIP_CERTBOT_VERIFICATION_VS_IP = "" - The IP address of the VS which will be used for the verification challenge ( Can be the same as the actual SSL VS ) </br>
+BIGIP_MNG_IP = "" - The management IP address of the Big-IP &nbsp;
+BIGIP_CERTBOT_VERIFICATION_VS_IP = "" - The IP address of the VS which will be used for the verification challenge ( Can be the same as the actual SSL VS ) &nbsp;
 BIGIP_SSL_VS_IP = "" - The IP of the actual VS server that will be used in production
 </code>
 
 <h3>Simple bash command</h3>
-This simple command with your actual domain will deploy the challenge, generate an appropriate certificate, upload it to the Big-IP and will create the SSL client profile and VS. </br>
+This simple command with your actual domain will deploy the challenge, generate an appropriate certificate, upload it to the Big-IP and will create the SSL client profile and VS. &nbsp;
 <code> ./dehydrated --accept-terms -c -d www.mydomain.net -k /certbot/dehydrated/certbot_hook.py
 </code>
 <h3>Docker</h3>
