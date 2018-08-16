@@ -25,7 +25,7 @@ BIGIP_SSL_VS_IP = "" - The IP of the actual VS server that will be used in produ
 </code>
 
 <h3>Simple bash command</h3>
-This simple command with your actual domain will deploy the challenge, generate an appropriate certificate, upload it to the Big-IP and will create the SSL client profile and VS. <br>&nbsp;
+This simple command with your actual domain will deploy the challenge, generate an appropriate certificate, upload it to the Big-IP and will create the SSL client profile and VS. <br></br>
 <code> ./dehydrated --accept-terms -c -d www.mydomain.net -k /certbot/dehydrated/certbot_hook.py
 </code>
 <h3>Docker</h3>
