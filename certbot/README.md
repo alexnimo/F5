@@ -1,6 +1,6 @@
-#F5 Certbot Automator
-<img src="https://certbot.eff.org/images/certbot-logo-1A.svg">
-
+<h3>F5 Certbot Automator
+<img src="https://certbot.eff.org/images/certbot-logo-1A.svg" alt="certbot bot" width="100px" height="100px">
+</h3>
 <h2> Abstract </h2>
 <p>
 This project uses lukas2511's <a href="https://github.com/lukas2511/dehydrated"> dehydrated </a> script
