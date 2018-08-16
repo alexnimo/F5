@@ -21,13 +21,13 @@ Some basic configuration must be made in the certbot_hook.py:
 <code>
 BIGIP_MNG_IP = "" - The management IP address of the Big-IP
 
-BIGIP_CERTBOT_VERIFICATION_VS_IP = \"\" - The IP address of the VS which will be used for the verification challenge ( Can be the same as the actual SSL VS ) 
-BIGIP_SSL_VS_IP = \"\" - The IP of the actual VS server that will be used in production
+BIGIP_CERTBOT_VERIFICATION_VS_IP = \"\" - The IP address of the VS which will be used for the verification challenge ( Can be the same as the actual SSL VS ) <br></br>
+<BIGIP_SSL_VS_IP = \"\" - The IP of the actual VS server that will be used in production
 </code>
 
 <h3>Simple bash command</h3>
 This simple command with your actual domain will deploy the challenge, generate an appropriate certificate, upload it to the Big-IP and will create the SSL client profile and VS. 
-<br>
+<br></br>
 <code> ./dehydrated --accept-terms -c -d www.mydomain.net -k /certbot/dehydrated/certbot_hook.py
 </code>
 <h3>Docker</h3>
