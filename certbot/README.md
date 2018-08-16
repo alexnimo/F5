@@ -1,9 +1,10 @@
-<h3><p>F5 Certbot Automator
-<img src="https://certbot.eff.org/images/certbot-logo-1A.svg" alt="certbot bot" width="200px" height="200px" align="left"></p>
-</h3>
+<h1> <a target="_blank" href="https://certbot.eff.org/">
+<img src="https://certbot.eff.org/images/certbot-logo-1A.svg" alt="certbot bot" width="200px" height="200px" align="left"></a>
+F5 Certbot Automator
+</h1>
 <h2> Abstract </h2>
 <p>
-This project uses lukas2511's <a href="https://github.com/lukas2511/dehydrated"> dehydrated </a> script
+This project uses lukas2511's <a target="_blank" href="https://github.com/lukas2511/dehydrated"> dehydrated </a> script
 as a base to deploying letsencrypt certificate automatically to the F5 Big-IP.
 
 I'm not a codder and therefore my hook script is a dirty python script, not code efficient and probably poorly written but in the process of writing the script I've learned a bit about many different topics like: python, F5 api and SDK, docker, automation, certbot and much more.
@@ -33,10 +34,10 @@ This simple command with your actual domain will deploy the challenge, generate 
 <p> Most of this project is based on an amazing work the following projects: </p>
 
 <ul>
-<li>Without it( and lets-encrypt ), non of these were possible - https://github.com/lukas2511/dehydrated</li>
-<li>Some of the code is directly taken form the hook script of f5 - https://github.com/f5devcentral/lets-encrypt-python </li>
-<li>Lots of help from F5 Dev Central - https://devcentral.f5.com</li>
-<li>Lots of time spent with the API docs: - http://f5-sdk.readthedocs.io</li>
+<li>Without it( and lets-encrypt ), non of these were possible - <a target="_blank" href="https://github.com/lukas2511/dehydrated"></li>
+<li>Some of the code is directly taken form the hook script of f5 - <a target="_blank" href="https://github.com/f5devcentral/lets-encrypt-python"> </li>
+<li>Lots of help from F5 Dev Central - <a target="_blank" href="https://devcentral.f5.com"></li>
+<li>Lots of time spent with the API docs: - <a target="_blank" href="http://f5-sdk.readthedocs.io"></li>
 </ul>
 <h2>To-Do List<h2>
 <li>Configure ssl profile with strong ciphers</li>
