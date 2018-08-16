@@ -1,5 +1,5 @@
 <h1> <a target="_blank" class="anchor" href="https://certbot.eff.org/">
-<img src="https://certbot.eff.org/images/certbot-logo-1A.svg" alt="certbot bot" width="200px" height="200px" align="left"></a>
+<img src="https://certbot.eff.org/images/certbot-logo-1A.svg" alt="certbot bot" width="200px" height="200px" align="left" style="float"></a>
 F5 Certbot Automator
 </h1>
 <h2> Abstract </h2>
@@ -34,12 +34,12 @@ This simple command with your actual domain will deploy the challenge, generate 
 <p> Most of this project is based on an amazing work the following projects: </p>
 
 <ul>
-<li>Without it( and lets-encrypt ), non of these were possible - <a target="_blank" href="https://github.com/lukas2511/dehydrated"></li>
-<li>Some of the code is directly taken form the hook script of f5 - <a target="_blank" href="https://github.com/f5devcentral/lets-encrypt-python"> </li>
-<li>Lots of help from F5 Dev Central - <a target="_blank" href="https://devcentral.f5.com">https://devcentral.f5.com</a></li>
-<li>Lots of time spent with the API docs: - <a target="_blank" href="http://f5-sdk.readthedocs.io"></li>
+<li>Without it( and lets-encrypt ), non of these were possible - https://github.com/lukas2511/dehydrated</li>
+<li>Some of the code is directly taken form the hook script of f5 - https://github.com/f5devcentral/lets-encrypt-python </li>
+<li>Lots of help from F5 Dev Central - https://devcentral.f5.com</li>
+<li>Lots of time spent with the API docs: - http://f5-sdk.readthedocs.io</li>
 </ul>
-<h2>To-Do List<h2>
+<h2>To-Do List</h2>
 <li>Configure ssl profile with strong ciphers</li>
 <li>Assign HTTP profile with HSTS </li>
 <li>integration with additional modules and vendors</li>
