@@ -1,6 +1,10 @@
 <h1> <div style="text-align:center"><a target="_blank" href="https://certbot.eff.org/">
 <img src="https://certbot.eff.org/images/certbot-logo-1A.svg" alt="certbot bot" width="200px" height="200px" align="center" style="max-width:100%;"></a>
+<<<<<<< HEAD
 "&nbsp;&nbsp;F5 Certbot Automator"</div>
+=======
+&nbsp;&nbsp;&nbsp;F5 Certbot Automator
+>>>>>>> 1db3e5d75b4f6c6dd0d20a9c732a00ff3218d5fe
 </h1>
 <h2> Abstract </h2>
 <p>
