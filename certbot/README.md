@@ -21,8 +21,8 @@ Some basic configuration must be made in the certbot_hook.py:
 <code>
 BIGIP_MNG_IP = " " - The management IP address of the Big-IP
 
-BIGIP_CERTBOT_VERIFICATION_VS_IP = " " - The IP address of the VS which will be used for the verification challenge ( Can be the same as the actual SSL VS ) <br></br>&nbsp;<br>
-<br></br>
+BIGIP_CERTBOT_VERIFICATION_VS_IP = " " - The IP address of the VS which will be used for the verification challenge ( Can be the same as the actual SSL VS )
+
 BIGIP_SSL_VS_IP = " " - The IP of the actual VS server that will be used in production
 </code>
 
