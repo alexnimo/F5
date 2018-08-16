@@ -1,17 +1,13 @@
 <h1> <div style="text-align:center"><a target="_blank" href="https://certbot.eff.org/">
 <img src="https://certbot.eff.org/images/certbot-logo-1A.svg" alt="certbot bot" width="200px" height="200px" align="center" style="max-width:100%;"></a>
-<<<<<<< HEAD
-"&nbsp;&nbsp;F5 Certbot Automator"</div>
-=======
-&nbsp;&nbsp;&nbsp;F5 Certbot Automator
->>>>>>> 1db3e5d75b4f6c6dd0d20a9c732a00ff3218d5fe
+&nbsp;&nbsp;F5 Certbot Automator</div>
 </h1>
 <h2> Abstract </h2>
 <p>
 This project uses lukas2511's <a target="_blank" href="https://github.com/lukas2511/dehydrated"> dehydrated </a> script
 as a base to deploying letsencrypt certificate automatically to the F5 Big-IP.
 
-I'm not a codder and therefore my hook script is a dirty python script, not code efficient and probably poorly written but in the process of writing the script I've learned a bit about many different topics like: python, F5 api and SDK, docker, automation, certbot and much more.
+I'm not a codder and therefore my hook script is a dirty python script, not code efficient and probably poorly written but in the process of writing the script I've learned a bit about many different topics like: python, F5 api and SDK, docker, automation, certbot, git and much more.
 
 The main purpose of this hook script is to configure every aspect of the Big-IP automatically.
 The challenge that is being implemented is http, to my opinion it's more generic then DNS.
