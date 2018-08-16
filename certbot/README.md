@@ -1,5 +1,5 @@
 <h3>F5 Certbot Automator
-<img src="https://certbot.eff.org/images/certbot-logo-1A.svg" alt="certbot bot" width="100px" height="100px">
+<img src="https://certbot.eff.org/images/certbot-logo-1A.svg" alt="certbot bot" width="200px" height="200px" align="right">
 </h3>
 <h2> Abstract </h2>
 <p>
