@@ -16,9 +16,9 @@ The challenge that is being implemented is http, to my opinion it's more generic
 <h2>Usage</h2>
 <h3>Requirements</h3>
 <p>
-<code>
 python 2.7
 <br>
+<code>
 pip install f5-sdk
 </code>
 </p>
