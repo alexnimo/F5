@@ -15,14 +15,6 @@ The challenge that is being implemented is http, to my opinion it's more generic
 </p>
 
 <h2>Usage</h2>
-<h3>Requirements</h3>
-<p>
-python 2.7
-<br>
-<code>
-pip install f5-sdk
-</code>
-</p>
 <h3>Configuration</h3>
 <p> dehydrated configuration can be changed by editing the config file( you can also run the script with the default config file). &nbsp;
 Some basic configuration must be made in the certbot_hook.py:
