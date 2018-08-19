@@ -41,6 +41,10 @@ This simple command with your actual domain will deploy the challenge, generate 
 <br></br>
 <code> ./dehydrated --accept-terms -c -d www.mydomain.net -k /certbot/certbot_hook.py
 </code>
+<h3>crontab task</h3>
+<code>
+(crontab -l >/dev/null; echo "* 23 * * * ./dehydrated --accept-terms -c -d www.mydomain.com -k /certbot/certbot_hook.py") | crontab -
+</code>
 <h3>Docker</h3>
 <h2>Contributors</h2>
 
