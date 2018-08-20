@@ -25,7 +25,7 @@
 							"",
 							"    if (json_token.token.token > \"1\") {",
 							"        ",
-							"        postman.setEnvironmentVariable(\"SH-WAF-01_token\" , json_token.token.token);",
+							"        postman.setEnvironmentVariable(\"WAF_token\" , json_token.token.token);",
 							"    }",
 							"",
 							"});",
@@ -96,7 +96,7 @@
 					},
 					{
 						"key": "X-F5-Auth-Token",
-						"value": "{{SH-WAF-01_token}}"
+						"value": "{{WAF_token}}"
 					}
 				],
 				"body": {
@@ -104,7 +104,7 @@
 					"raw": "{\n    \"timeout\":\"36000\"\n}"
 				},
 				"url": {
-					"raw": "https://{{bigip_ip}}/mgmt/shared/authz/tokens/{{SH-WAF-01_token}}",
+					"raw": "https://{{bigip_ip}}/mgmt/shared/authz/tokens/{{WAF_token}}",
 					"protocol": "https",
 					"host": [
 						"{{bigip_ip}}"
@@ -114,7 +114,7 @@
 						"shared",
 						"authz",
 						"tokens",
-						"{{SH-WAF-01_token}}"
+						"{{WAF_token}}"
 					]
 				}
 			},
@@ -149,7 +149,7 @@
 				"header": [
 					{
 						"key": "X-F5-Auth-Token",
-						"value": "{{SH-WAF-01_token}}"
+						"value": "{{WAF_token}}"
 					},
 					{
 						"key": "Content-Type",
@@ -197,7 +197,7 @@
 				"header": [
 					{
 						"key": "X-F5-Auth-Token",
-						"value": "{{SH-WAF-01_token}}"
+						"value": "{{WAF_token}}"
 					},
 					{
 						"key": "Content-Type",
@@ -249,7 +249,7 @@
 					},
 					{
 						"key": "X-F5-Auth-Token",
-						"value": "{{SH-WAF-01_token}}"
+						"value": "{{WAF_token}}"
 					}
 				],
 				"body": {
@@ -308,7 +308,7 @@
 					},
 					{
 						"key": "X-F5-Auth-Token",
-						"value": "{{SH-WAF-01_token}}"
+						"value": "{{WAF_token}}"
 					}
 				],
 				"body": {
@@ -357,7 +357,7 @@
 					},
 					{
 						"key": "X-F5-Auth-Token",
-						"value": "{{SH-WAF-01_token}}"
+						"value": "{{WAF_token}}"
 					}
 				],
 				"body": {
