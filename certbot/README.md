@@ -34,7 +34,7 @@ BIGIP_CERTBOT_VERIFICATION_VS_IP = " " - The IP address of the VS which will be 
 </code>
 <br>
 <code>BIGIP_SSL_VS_IP = " " - The IP of the actual VS server that will be used in production
-</code>
+</code>k
 
 <h3>Simple bash command</h3>
 This simple command with your actual domain will deploy the challenge, generate an appropriate certificate, upload it to the Big-IP and will create the SSL client profile and VS. 
@@ -43,7 +43,7 @@ This simple command with your actual domain will deploy the challenge, generate 
 </code>
 <h3>crontab task</h3>
 <code>
-(crontab -l >/dev/null; echo "* 23 * * * ./dehydrated --accept-terms -c -d www.mydomain.com -k /certbot/certbot_hook.py") | crontab -
+(crontab -l >/dev/null; echo "0 23 * * * ./dehydrated --accept-terms -c -d www.mydomain.com -k /certbot/certbot_hook.py") | crontab -
 </code>
 <h3>Docker</h3>
 <h2>Contributors</h2>
