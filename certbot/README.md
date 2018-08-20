@@ -25,7 +25,7 @@ pip install f5-sdk
 </p>
 <h3>Configuration</h3>
 <p> dehydrated configuration can be changed by editing the config file( you can also run the script with the default config file). &nbsp;
-Some basic configuration must be made in the certbot_hook.py:
+Some basic configuration must be done in the certbot_hook.py:
 </p>
 <code>
 BIGIP_MNG_IP = " " - The management IP address of the Big-IP

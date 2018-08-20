@@ -5,15 +5,7 @@ from f5.bigip.contexts import TransactionContextManager
 import os
 import sys
 
-###TODO_List####
 
-#Assign ssl profile to VS
-#update SSL profile with new certificate
-#Strong ciphers on ssl profile
-#Assign HTTP profile with HSTS
-#integration with additional modules and vendors
-#Slack updates
-#Delete Old certs and keys
 
 #################Global Variables###############
 
