@@ -1,8 +1,8 @@
 {
 	"info": {
-		"name": "Shaam ASM Policy Creation",
+		"name": "ASM Policy Creation",
 		"_postman_id": "6e324f84-b53f-8964-5698-a1bf1cf2c821",
-		"description": "Creates ASM policies ( can create polices from csv file)",
+		"description": "Creates ASM policies - With Traffic group ( multiple policies from csv file)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
