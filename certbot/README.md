@@ -49,10 +49,10 @@ This simple command with your actual domain will deploy the challenge, generate 
 <h3>Docker</h3>
 <p>Create Persistent storage <br>
 <code>docker create -v /certbot/certs --name certbot_storage f5_certbot /bin/true</code></p>
-<p>Build image</p>
-<code>docker build -t f5_certbot </code>
-<p>Run container</p>
-<code>docker run -i --rm --volumes-from certbot_storage --name f5_certbot_automator f5_certbot /bin/bash certbot_auto.sh
+<p>Build image <br>
+<code>docker build -t f5_certbot </code></p>
+<p>Run container <br>
+<code>docker run -i --rm --volumes-from certbot_storage --name f5_certbot_automator f5_certbot /bin/bash certbot_auto.sh </p>
 </code>
 <h2>Contributors</h2>
 
