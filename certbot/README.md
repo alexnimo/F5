@@ -47,7 +47,7 @@ This simple command with your actual domain will deploy the challenge, generate 
 </code>
 <br>
 <h3>Docker</h3>
-<p>Create Persistent storage
+<p>Create Persistent storage <br>
 <code>docker create -v /certbot/certs --name certbot_storage f5_certbot /bin/true</code></p>
 <p>Build image</p>
 <code>docker build -t f5_certbot </code>
