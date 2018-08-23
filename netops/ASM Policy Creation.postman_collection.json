@@ -1,12 +1,13 @@
 {
 	"info": {
+		"_postman_id": "94862b8b-5c67-4933-b6b5-d112198d1d7a",
 		"name": "ASM Policy Creation",
-		"_postman_id": "6e324f84-b53f-8964-5698-a1bf1cf2c821",
 		"description": "Creates ASM policies - With Traffic group ( multiple policies from csv file)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
+			"_postman_id": "fd4868ae-3fde-48f9-9056-d394bd38d2f9",
 			"name": "Step 1: Retrieve Authentication Token",
 			"event": [
 				{
@@ -59,12 +60,12 @@
 						"authn",
 						"login"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
+			"_postman_id": "174299e7-81d9-4f05-9376-7d93003357db",
 			"name": "Step 2: Set Authentication Token Timeout",
 			"event": [
 				{
@@ -121,6 +122,7 @@
 			"response": []
 		},
 		{
+			"_postman_id": "b63e4a0b-55f4-432d-8a15-53b91206113d",
 			"name": " Step 3: Create ASM Policy",
 			"event": [
 				{
@@ -173,12 +175,12 @@
 						"policies",
 						""
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
+			"_postman_id": "a164e39b-bf99-4be4-aedf-cc0c4a1b85a3",
 			"name": " Step 4: Activate ASM Policy",
 			"event": [
 				{
@@ -221,12 +223,12 @@
 						"tasks",
 						"apply-policy"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
+			"_postman_id": "ce6462e1-7a56-4e88-8d25-0f89952e6932",
 			"name": "Step 5: Create Draft Rule",
 			"event": [
 				{
@@ -270,12 +272,12 @@
 						"{{traffic_policy_pub}}",
 						""
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
+			"_postman_id": "7d37980c-2ef7-437d-9df6-6fcd12d9e0c9",
 			"name": "Step 6: Set Rule - Path+ASM_Profile",
 			"event": [
 				{
@@ -329,13 +331,73 @@
 						"{{draft_policy}}",
 						"rules"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "Step 7: Publish Taffic Policy",
+			"_postman_id": "c7ed8720-316d-45dd-a601-429dcbe92314",
+			"name": "Step 7: Reorder default rule",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d4282e22-1915-4e31-a112-a7f6bb712210",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3dcc55bf-8a07-4622-b1cd-a881e5cd2201",
+						"type": "text/javascript",
+						"exec": [
+							"setTimeout(function (){}, 30000); //wait 30 seconds"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-F5-Auth-Token",
+						"value": "{{WAF_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n    {\n    \t\t\n    \t\t\"kind\": \"tm:ltm:policy:rules:rulesstate\",\n    \t\t\"name\": \"{{app_name}}\",\n    \t\t\"generation\": 0,\n    \t\t\"selflink\": \"https://localhost/mgmt/tm/ltm/policy/{{traffic_policy_pub}}/rules\",\n    \t\t\"ordinal\": 99\n    \t\t\n}"
+				},
+				"url": {
+					"raw": "https://{{bigip_ip}}/mgmt/tm/ltm/policy/{{draft_policy}}/rules/default",
+					"protocol": "https",
+					"host": [
+						"{{bigip_ip}}"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"ltm",
+						"policy",
+						"{{draft_policy}}",
+						"rules",
+						"default"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "e2f4639f-efed-4b54-bc59-a92ad5364df6",
+			"name": "Step 8: Publish Taffic Policy",
 			"event": [
 				{
 					"listen": "test",
@@ -376,8 +438,7 @@
 						"ltm",
 						"policy"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		}
