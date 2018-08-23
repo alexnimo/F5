@@ -45,7 +45,18 @@ This simple command with your actual domain will deploy the challenge, generate 
 <code>
 (crontab -l >/dev/null; echo "0 23 * * * ./dehydrated --accept-terms -c -d www.mydomain.com -k /certbot/certbot_hook.py") | crontab -
 </code>
+<br>
 <h3>Docker</h3>
+<p>Create Persistent storage</p>
+<br>
+<code>docker create -v /certbot/certs --name certbot_storage f5_certbot /bin/true</code>
+<p>Build image</p>
+<code>docker build -t f5_certbot </code>
+<br>
+<p>Run container</p>
+<br>
+<code>docker run -i --rm --volumes-from certbot_storage --name f5_certbot_automator f5_certbot /bin/bash certbot_auto.sh
+</code>
 <h2>Contributors</h2>
 
 <p> Most of this project is based on an amazing work of the following projects: </p>
