@@ -34,7 +34,10 @@ BIGIP_CERTBOT_VERIFICATION_VS_IP = " " - The IP address of the VS which will be 
 </code>
 <br>
 <code>BIGIP_SSL_VS_IP = " " - The IP of the actual VS server that will be used in production
-</code>k
+    <p>Create challenge directory
+    </p>
+    <code>mkdir /certbot/www_hook</code>
+</code>
 
 <h3>Simple bash command</h3>
 This simple command with your actual domain will deploy the challenge, generate an appropriate certificate, upload it to the Big-IP and will create the SSL client profile and VS. 
