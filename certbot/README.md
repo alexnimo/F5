@@ -25,7 +25,7 @@ pip install f5-sdk
 </p>
 <h3>Configuration</h3>
 <p> dehydrated configuration can be changed by editing the config file( you can also run the script with the default config file). &nbsp;
-Some basic configuration must be made in the certbot_hook.py:
+Some basic configuration must be done in the certbot_hook.py:
 </p>
 <code>
 BIGIP_MNG_IP = " " - The management IP address of the Big-IP
@@ -33,15 +33,30 @@ BIGIP_MNG_IP = " " - The management IP address of the Big-IP
 BIGIP_CERTBOT_VERIFICATION_VS_IP = " " - The IP address of the VS which will be used for the verification challenge ( Can be the same as the actual SSL VS )
 </code>
 <br>
-<code>BIGIP_SSL_VS_IP = " " - The IP of the actual VS server that will be used in production
-</code>
+<code>BIGIP_SSL_VS_IP = " " - The IP of the actual VS server that will be used in production</code>
+
+    <p>Create challenge directory </p>
+    <code>mkdir /certbot/www_hook</code>
+
 
 <h3>Simple bash command</h3>
 This simple command with your actual domain will deploy the challenge, generate an appropriate certificate, upload it to the Big-IP and will create the SSL client profile and VS. 
 <br></br>
 <code> ./dehydrated --accept-terms -c -d www.mydomain.net -k /certbot/certbot_hook.py
 </code>
+<h3>Crontab task</h3>
+<code>
+(crontab -l >/dev/null; echo "0 23 * * * ./dehydrated --accept-terms -c -d www.mydomain.com -k /certbot/certbot_hook.py") | crontab -
+</code>
+<br>
 <h3>Docker</h3>
+<p>Create Persistent storage <br>
+<code>docker create -v /certbot/certs --name certbot_storage f5_certbot /bin/true</code></p>
+<p>Build image <br>
+<code>docker build -t f5_certbot . </code></p>
+<p>Run container <br>
+<code>docker run -i --rm --volumes-from certbot_storage --name f5_certbot_automator f5_certbot /bin/bash certbot_auto.sh </p>
+</code>
 <h2>Contributors</h2>
 
 <p> Most of this project is based on an amazing work of the following projects: </p>

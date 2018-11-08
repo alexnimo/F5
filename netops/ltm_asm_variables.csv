@@ -1,0 +1,3 @@
+vs_name,vs_ip_port,Pool,client_ssl,security_log_profile,app_name,asm_template
+test_vs1,1.2.3.4:8081,juice-shop_docker,client_ssl,LogAllRequests,testapp1,EzpBNMs9gbVsF5uuiBjYDw
+test_vs2,1.2.3.5:8081,juice-shop_docker,client_ssl,LogAllRequests,testapp2,EzpBNMs9gbVsF5uuiBjYDw

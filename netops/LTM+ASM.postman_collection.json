@@ -1,0 +1,213 @@
+{
+	"info": {
+		"_postman_id": "bdcfdec8-92d4-49d0-9b7b-505e64af5c27",
+		"name": "LTM+ASM",
+		"description": "Create VS and ASM policy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Retrieve Authentication Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "88c4cef2-bd6d-421d-9ecd-b93b3c6f9a83",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"pm.test(\"Verify Token and set ENV\" , function() {",
+							"    ",
+							"    pm.response.to.have.status(200);",
+							"    var json_token = pm.response.json(pm.environment.get(\"token.token\"));",
+							"    pm.response.to.have.body(json_token);",
+							"    tests[ \"Token Value is: \" + json_token.token.token] = true;",
+							"",
+							"    if (json_token.token.token > \"1\") {",
+							"        ",
+							"        postman.setEnvironmentVariable(\"WAF_token\" , json_token.token.token);",
+							"    }",
+							"",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"{{username}}\",\n    \"password\":\"{{password}}\",\n    \"loginProviderName\":\"tmos\"\n}"
+				},
+				"url": {
+					"raw": "https://{{bigip_ip}}/mgmt/shared/authn/login",
+					"protocol": "https",
+					"host": [
+						"{{bigip_ip}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"authn",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Authentication Token Timeout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d46e91e8-22b5-40f0-a5d9-27a9eba5ab0f",
+						"type": "text/javascript",
+						"exec": [
+							"eval(postman.getGlobalVariable(\"_f5_workflow_functions\"));",
+							"",
+							"var check_vals = [",
+							"        { ",
+							"            \"path\":\"timeout\", ",
+							"            \"value\":\"36000\" ",
+							"        }",
+							"    ];",
+							"",
+							"pm.test(check_vals);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-F5-Auth-Token",
+						"value": "{{WAF_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"timeout\":\"36000\"\n}"
+				},
+				"url": {
+					"raw": "https://{{bigip_ip}}/mgmt/shared/authz/tokens/{{WAF_token}}",
+					"protocol": "https",
+					"host": [
+						"{{bigip_ip}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"authz",
+						"tokens",
+						"{{WAF_token}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a Virtual Server",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-F5-Auth-Token",
+						"value": "{{WAF_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"{{vs_name}}\",\n    \"destination\":\"{{vs_ip_port}}\",\n    \"ipProtocol\": \"tcp\",\n    \"pool\":\"{{Pool}}\",\n    \"sourceAddressTranslation\": { \"type\":\"automap\" },\n    \"profiles\": [\n        \"/Common/http\",\n        { \"name\":\"/Common/{{client_ssl}}\", \"context\":\"clientside\" }\n\n    ],\n\t\"securityLogProfiles\": [\"/Common/{{security_log_profile}}\"]\n}"
+				},
+				"url": {
+					"raw": "https://{{bigip_ip}}/mgmt/tm/ltm/virtual",
+					"protocol": "https",
+					"host": [
+						"{{bigip_ip}}"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"ltm",
+						"virtual"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create ASM Policy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "39d34e5c-cee3-46dc-9805-a6fd844610a7",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"pm.test(\"Set ASM policy ID\" , function() {",
+							"    ",
+							"    var asm_policy = pm.response.json(pm.environment.get(\"id\"));",
+							"    var asm_policy_name = pm.response.json(pm.environment.get(\"fullPath\"));",
+							"    pm.response.to.have.body(asm_policy);",
+							"    postman.setEnvironmentVariable(\"asm_policy_id\" , asm_policy.id);",
+							"    postman.setEnvironmentVariable(\"asm_policy_name\" , asm_policy.fullPath);",
+							"",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-F5-Auth-Token",
+						"value": "{{WAF_token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"{{app_name}}\",\n    \"active\": \"false\",\n    \"applicationLanguage\": \"utf-8\",\n    \"description\": \"{{app_name}}\",\n    \"enforcementMode\": \"transparent\",\n    \"templateReference\": {\n    \t\"link\":\"{{asm_template}}\"\n    },\n    \"virtualServers\" : [\"/Common/{{vs_name}}\"]\n}"
+				},
+				"url": {
+					"raw": "https://{{bigip_ip}}/mgmt/tm/asm/policies/",
+					"protocol": "https",
+					"host": [
+						"{{bigip_ip}}"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"asm",
+						"policies",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
