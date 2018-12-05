@@ -1,0 +1,44 @@
+[f5_config]
+
+#BIGIP USER
+BIGIP_USER = admin
+
+#BIGIP Password
+BIGIP_PASSWORD = admin
+
+#BIGIP Management IP Address
+BIGIP_MNG_IP = 127.0.0.1
+
+#BIGIP default partition
+BIGIP_PARTITION = Common
+
+#BIGIP Certbot HTTP VS NAME ( certbot HTTP verification)
+BIGIP_CERTBOT_VERIFICATION_VS_NAME = certbot_challenge
+
+#BIGIP CERTBOT HTTP VS IP ( certbot HTTP verification VS IP)
+BIGIP_CERTBOT_VERIFICATION_VS_IP = 5.5.5.5
+
+#BIGIP SSL/TLS VS NAME (Actual VS Name to attach SSL profile)
+BIGIP_SSL_VS_NAME = MY_VS
+
+#BIGIP SSL VS NAME (Actual VS IP to attach SSL profile)
+BIGIP_SSL_VS_IP = 5.5.5.6
+
+#BIGIP Vlan
+BIGIP_VLAN = 
+
+#HTTP profile to use with the SSL VS
+BIGIP_HTTP_PROFILE = http
+
+#BIGIP SSL Profile with generated certificates
+BIGIP_SSL_PROFILE = certbot_client_ssl
+
+#BIGIP VS Default SSL PORT
+BIGIP_SSL_VS_PORT = 443
+
+[slack_config]
+
+slack_token = 
+slackbot_icon_url = https://avatars0.githubusercontent.com/u/17889013?s=200&v=4
+slack_channel= 
+slack_user = 

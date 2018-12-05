@@ -10,6 +10,7 @@ except ImportError:
     print("Please install configparser")
 try:
     from slackclient import SlackClient
+    slackinst = "true"
 except ImportError:
     print("slackclient package is not installed")
     pass
@@ -47,7 +48,7 @@ def clean_challenge(b_mg, b_vs_name, b_part):
     rule.delete()
 
 
-def f5_cert_deployer(b_mg, b_vs_name, b_vs_ip, b_part, b_vlan, b_http_prof, b_ssl_prof, b_vs_port, *args):
+def f5_cert_deployer(b_mg, b_vs_name, b_vs_ip, b_part, b_vlan, b_http_prof, b_ssl_prof, b_vs_port, sc_vars, scObj,  *args):
 
     domain = args[0][2]
     key = args[0][3]
@@ -86,12 +87,15 @@ def f5_cert_deployer(b_mg, b_vs_name, b_vs_ip, b_part, b_vlan, b_http_prof, b_ss
             modcert.sourcePath = 'file:/var/config/rest/downloads/%s' % (
                 os.path.basename(cert))
             modcert.update()
-
-            modchain = api.tm.sys.file.ssl_certs.ssl_cert.load(
-                name='le-chain.crt')
+	    try:
+	        modchain = api.tm.sys.file.ssl_certs.ssl_cert.load(
+            name='le-chain.crt')
             modchain.sourcePath = 'file:/var/config/rest/downloads/%s' % (
-                os.path.basename(chain))
+            os.path.basename(chain))
             modchain.update()
+        except:
+            print("chain file already exists")
+            pass
 
 
     else:
@@ -177,16 +181,19 @@ def f5_cert_deployer(b_mg, b_vs_name, b_vs_ip, b_part, b_vlan, b_http_prof, b_ss
 
             except Exception as err:
                 print(err)
-                
-    if sc_vars == "1":
+		        pass
+
+    if sc_vars == 1:
         sc = SlackClient(scObj[0])
         sc.api_call(
             "chat.postMessage",
             channel = scObj[2],
-            text = "Certificate deployemt succeeded",
+            text = "Certificate deployment succeeded",
             user = scObj[3],
             icon_url = scObj[1]
         )
+    else:
+      pass
 
 
 
@@ -194,10 +201,11 @@ def main(*args):
 
     #Read configuration from config file
     config = configparser.ConfigParser()
-    config.read(config)
+    config.read('f5_config')
     BIGIP_USER = config.get('f5_config' , 'BIGIP_USER')
     BIGIP_PASSWORD = config.get('f5_config' , 'BIGIP_PASSWORD')
     BIGIP_MNG_IP = config.get('f5_config' , 'BIGIP_MNG_IP')
+    BIGIP_VLAN = config.get('f5_config', 'BIGIP_VLAN')
     BIGIP_PARTITION = config.get('f5_config' , 'BIGIP_PARTITION')
     BIGIP_CERTBOT_VERIFICATION_VS_NAME = config.get('f5_config' , 'BIGIP_CERTBOT_VERIFICATION_VS_NAME')
     BIGIP_CERTBOT_VERIFICATION_VS_IP = config.get('f5_config' , 'BIGIP_CERTBOT_VERIFICATION_VS_IP')
@@ -207,16 +215,18 @@ def main(*args):
     BIGIP_SSL_PROFILE = config.get('f5_config' , 'BIGIP_SSL_PROFILE')
     BIGIP_SSL_VS_PORT = config.get('f5_config' ,'BIGIP_SSL_VS_PORT')
 
-    if slackinst ne "false":
-        sc_token = config.get('slack_config' , 'slack_token')
-        sc_icon = config.get('slack_config' , "https://avatars0.githubusercontent.com/u/17889013?s=200&v=4")
-        sc_channel = config.get('slack_config' , 'slack_channel')
+    if slackinst != "false":
+        sc_token = str(config.get('slack_config' , 'slack_token'))
+        sc_icon = config.get('slack_config' , "slackbot_icon_url")
+        sc_channel = str(config.get('slack_config' , 'slack_channel'))
         sc_user = config.get('slack_config' , 'slack_user')
-        if (sc_token.length > 1 && sc_cahnnel > 1):
+        if (len(sc_token) > 1) & (len(sc_channel) > 1):
             sc_vars = 1
             scObj =[]
-            scObj.insert(sc_token , sc_icon , sc_channel , sc_user)
-            print(scObj)
+            scObj.append(sc_token)
+	        scObj.append(sc_icon)
+	        scObj.append(sc_channel)
+            scObj.append(sc_user)
         else:
             sc_vars = 0
 
