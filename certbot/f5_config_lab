@@ -4,7 +4,7 @@
 BIGIP_USER = nimo
 
 #BIGIP Password
-BIGIP_PASSWORD = Inf0$ec
+BIGIP_PASSWORD = 
 
 #BIGIP Management IP Address
 BIGIP_MNG_IP = 10.30.30.252
