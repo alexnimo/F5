@@ -22,8 +22,9 @@ python 2.7
 <code>
 pip install f5-sdk
 pip install configparser
-
-optional:
+</code>
+optional: &nbsp;
+<code>
 pip install slackclient
 </code>
 </p>
@@ -39,8 +40,8 @@ BIGIP_CERTBOT_VERIFICATION_VS_IP = " " - The IP address of the VS which will be 
 <br>
 <code>BIGIP_SSL_VS_IP = " " - The IP of the actual VS server that will be used in production</code>
 
-    <p>Create challenge directory </p>
-    <code>mkdir /certbot/www_hook</code>
+   <p>Create challenge directory </p>
+<code>mkdir /certbot/www_hook</code>
 
 
 <h3>Simple bash command</h3>
