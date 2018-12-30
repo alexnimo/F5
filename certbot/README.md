@@ -23,11 +23,7 @@ python 2.7
 pip install f5-sdk
 pip install configparser
 </code>
-optional: &nbsp;
-<code>
-pip install slackclient
-</code>
-</p>
+<p>optional:</p> <code> pip install slackclient </code>
 <h3>Configuration</h3>
 <p> dehydrated configuration can be changed by editing the config file( you can also run the script with the default config file). &nbsp;
 Some basic configuration must be done in the f5_config file:
