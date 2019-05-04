@@ -175,9 +175,10 @@ def f5_cert_deployer(b_mg, b_vs_name, b_vs_ip, b_part, b_vlan, b_http_prof, b_ss
                                 vs = api1.tm.ltm.virtuals.virtual.load(name=b_vs_name, partition=b_part)
                                 prof = vs.profiles_s.profiles.create(name=b_ssl_prof, partition=b_part)
 
-            except Exception as err:
-                print(err)
-                
+              except Exception as err:
+                  print(err)
+                 cont
+
     if sc_vars == "1":
         sc = SlackClient(scObj[0])
         sc.api_call(
